@@ -1,11 +1,11 @@
-// Zombie Dice Game v0.06
+// Zombie Dice Game v0.07
 import java.util.*;
 class Assignment2
 {
 	public static void main(String[] args)
 	{
-		int[] dice 		= {0,0,0, 0,0,0, 0,0, 0,0,0}; // {G,Y,R, GF,YF,RF, Brain,Shots, TG,TY,TR} TG,TY,TR - total dice on table.
-		int[] rollDice	= {0,0,0, 0,0,0, 0,0}; // {G,Y,R, X,X,X, Brain, Shots} rollDice output  
+		int[] dice = {0,0,0, 0,0,0, 0,0, 0,0,0, 0,0,0}; // {G,Y,R, GF,YF,RF, Brain,Shots, TG,TY,TR, GB,YB,RB} TG,TY,TR - total dice on table. GB,YB,RB - brain colors.
+		int[] rollDice = {0,0,0, 0,0,0, 0,0}; // {X,X,X, GF,YF,RF, GB,YB,RB, Shots} rollDice output  
 		
 		int tempBrains = 0; int tempShots = 0;
 		
@@ -30,39 +30,45 @@ class Assignment2
 			// menu options
 			if (userAction == 1) // play
 			{
-				pickDice(dice);	
+				pickDice(dice);	// picks dice colors. depending many foot it gets from Dicevalue method 
 				
-				dice[8] = dice[8] + dice[0]; // adds to total dice player have on table 
+				dice[8] = dice[8] + dice[0]; // adds to total dice player have on table. Needed for calculating pick ranges in pickDice
 				dice[9] = dice[9] + dice[1];
 				dice[10] = dice[10] + dice[2];
 						
 				System.out.println("\npickDice output: " + dice[0] + " " + dice[1] + " " + dice[2] + "  " 
 														 + dice[3] + " " + dice[4] + " " + dice[5] + "  "
 														 + dice[6] + " " + dice[7] + "  " 
-														 + dice[8] + " " + dice[9] + " " + dice[10]);
+														 + dice[8] + " " + dice[9] + " " + dice[10] + "  "
+														 + dice[11] + " " + dice[12] + " " + dice[13]);
 				
-				rollDice = Dicevalue(dice);
+				rollDice = Dicevalue(dice); // Rolls dice. returns foot values needed for pickDice. Brain colors for refils and score. Shotguns. 
 				
-				tempBrains = tempBrains + rollDice[6]; // brain // Change rollDice -> dice after alex method 
-				tempShots = tempShots + rollDice[7]; // shots
+				tempBrains = tempBrains + rollDice[6] + rollDice[7] + rollDice[8]; // counting temporary brains before user pressed "stop"
+				tempShots = tempShots + rollDice[9]; // counting temporary shots
 				
-				dice[3] = rollDice[3];
-				dice[4] = rollDice[4];
-				dice[5] = rollDice[5];
+				dice[11] = dice[11] + rollDice[6]; // keeping track of brain color in case we run out of dices in bucked
+				dice[12] = dice[12] + rollDice[7]; // these brain will go back in to the bucked
+				dice[13] = dice[13] + rollDice[8];
+				
+				dice[3] = rollDice[3]; // only foots values need change in "dice" array for input to pickDice
+				dice[4] = rollDice[4]; // so it copies from Dicevalue method output 
+				dice[5] = rollDice[5]; // to the input dice array for pickDice method
 				
 				System.out.println("Dicevalue output: " + rollDice[0] + " " + rollDice[1] + " " + rollDice[2] + "  " 
-						+ rollDice[3] + " " + rollDice[4] + " " + rollDice[5] + "  " 
-						+ rollDice[6] + " " + rollDice[7]);
+														+ rollDice[3] + " " + rollDice[4] + " " + rollDice[5] + "  " 
+														+ rollDice[6] + " " + rollDice[7] + " " + rollDice[8] + "  " + rollDice[9]);
 				
 				
 				
 				System.out.println("temporary stats   | player " + currentPlayer + " | Brain " + tempBrains + " | Shotguns " + tempShots + " |");
 				
-				if (tempShots >= 3) // Shotgun count. If shots=3 switch player. no points added.
+				if (tempShots >= 3) // Shotgun count check
 				{
 					System.out.println("You got 3 shots. Temp score lost. Switching player...");
 					System.out.println("permanent stats   | player " + currentPlayer + " | Brain " + playerScore[currentPlayer] + " |");
-					dice[8] = 0; dice[9] = 0; dice[10] = 0; // resets player dices on table 
+					dice[8] = 0; dice[9] = 0; dice[10] = 0; // resets dices on table 
+					dice[11] = 0; dice[12] = 0; dice[13] = 0; // resets brain colors on table
 					tempBrains = 0; tempShots = 0;
 					
 					currentPlayer++;
@@ -118,7 +124,14 @@ class Assignment2
 		
 		for (; manyPicks < 3; manyPicks++)
 		{
-			int totalDice = greenDice + yellowDice + redDice; // recalculation of bucked dice ranges
+			int totalDice = greenDice + yellowDice + redDice; // recalculation of bucked size
+			
+			if (totalDice <= 2) // bucked refil from brains on table
+			{
+				totalDice = totalDice + playerDice[10] + playerDice[11] + playerDice[12];
+				playerDice[10] = 0; playerDice[11] = 0; playerDice[12] = 0;
+			}
+			
 			int pick = (int) (Math.random() * totalDice + 1); // picks 1 dice
 			
 			if (pick <= greenDice) // checks range 1...n which color
@@ -163,6 +176,10 @@ class Assignment2
 		int ftyellow= 0;		// as it a new roll reset the value of the location of the footprint;
 		int ftred = 0;
 		
+		int greenBrains = 0;
+		int yellowBrains = 0;
+		int redBrains = 0;
+		
 		int a=PickGreen;     // copy the value of the  color of the dice on the table as i would need it to pass it my array outvaluue
 		int b=PickYellow;
 		int c=PickRed;
@@ -192,6 +209,7 @@ while (PickGreen !=0) {
 		// value 2,3,4 for brains
 	else if (GreenSide>1 && GreenSide<5){
 			Brains++;
+			greenBrains++;
 		}
 		
 	else{
@@ -207,6 +225,7 @@ while (PickRed !=0) {
 		// value 1 for brain			
 	if (RedSide==1){
 			Brains++;
+			redBrains++;
 		}
 		// value 2,3,4 for Gunshot
 	else if (RedSide>1 && RedSide<5){
@@ -231,6 +250,7 @@ while (PickYellow !=0) {
 		// value 3,4 for brains
 	else if (YellowSide>2 && YellowSide<5){
 			Brains++;
+			yellowBrains++;
 		}
 		
 	else{
@@ -244,17 +264,19 @@ while (PickYellow !=0) {
 	// create an array outvalue that will return the color of the dice G, Y, R,on which color of the footprint
 	// and the value of the diced that just role ( eg if it s brains or gunshot)	
 		
-		int[] outvalue= new int[8];
+		int[] outvalue= new int[10];
 		
-		outvalue[0] = 0; // Green dice
-		outvalue[1]= 0; // yellow dice
-		outvalue[2]= 0; //red dice
+		outvalue[0] = a; // Green dice
+		outvalue[1]= b; // yellow dice
+		outvalue[2]= c; //red dice
 		outvalue[3] =ftgreen;  // green foot
 		outvalue[4] = ftyellow; // yellow foot
 		outvalue[5] = ftred; // red foot
-		outvalue[6] = Brains; 
-		outvalue[7]= Gunshot;
-	
+		outvalue[6] = greenBrains; 
+		outvalue[7] = yellowBrains;
+		outvalue[8] = redBrains;
+		outvalue[9]= Gunshot;
+		
 
 	
 	return (outvalue);
