@@ -1,4 +1,4 @@
-// Zombie Dice Game v0.10 (2016.02.20)
+// Zombie Dice Game v0.11 (2016.02.20)
 /* Creation of RED DRAGON team
  * 
  * https://github.com/skulder/Zombie-Dice
@@ -34,15 +34,19 @@ class Assignment2
 		
 		Scanner in = new Scanner(System.in);
 		playerCount = in.nextInt();
-		
 		int[] playerScore = new int[playerCount];
+		
+		String[] playerName = new String[2]; // player naming
+		for (int i = 0; i < playerCount; i++) 
+		{
+			System.out.print("> Enter player " + i + " name: ");
+			playerName[i] = in.next();
+		}
 		
 		clearScreen();
 		System.out.println("> Total players " + playerCount);
-		
 		while (userAction != 3)
 		{
-			// menu drawing goes here
 			//1st menu line drawing
 			System.out.println("\u250C\u2500\u2500 Menu \u2500\u2500\u2500"
 			+ "\u2500\u2500\u2500\u2500\u2510"
@@ -53,20 +57,14 @@ class Assignment2
 			//2nd menu  line
 			System.out.println("\u2502 1 - Play      \u2502");
 
-			//2nd table line
-			//+ "  \u2502           \u2502");
-
 			//3rd menu line
 			System.out.println("\u2502 2 - Stop      \u2502"
 
 			//3rd table line
-			+ "      " + tempBrains  + "       " + tempShots + "       " + currentPlayer);
+			+ "      " + tempBrains  + "       " + tempShots + "     " + playerName[currentPlayer]);
 
 			//4th menu line
 			System.out.println("\u2502 3 - Exit Game \u2502");
-
-			//4th table line
-			//+ "  \u2502           \u2502");
 
 			//5th menu line
 			System.out.println("\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
@@ -77,12 +75,12 @@ class Assignment2
 			+ "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
 			+ "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500");
 			
-			for (int i = 0; i < playerCount; i++)
+			for (int i = 0; i < playerCount; i++) // score display
 			{
-				System.out.println("Player " + i + " has " + playerScore[i] + " brains");
+				System.out.println(playerName[i] + " score " + playerScore[i]);
 			}
 			
-			System.out.print("> Selection: ");
+			System.out.print("\n> Selection: ");
 			userAction = in.nextInt();
 			
 			// menu options
