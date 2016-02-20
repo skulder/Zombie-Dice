@@ -1,4 +1,4 @@
-// Zombie Dice Game v0.11 (2016.02.20)
+// Zombie Dice Game v0.12 (2016.02.20)
 /* Creation of RED DRAGON team
  * 
  * https://github.com/skulder/Zombie-Dice
@@ -18,7 +18,7 @@ class Assignment2
 {
 	public static void main(String[] args) throws IOException, InterruptedException
 	{
-		int[] dice	   = {0,0,0, 0,0,0, 0,0, 0,0,0, 0,0,0}; // {G,Y,R, GF,YF,RF, Brain,Shots, TG,TY,TR, GB,YB,RB}
+		int[] dice = {0,0,0, 0,0,0, 0,0, 0,0,0, 0,0,0}; // {G,Y,R, GF,YF,RF, Brain,Shots, TG,TY,TR, GB,YB,RB}
 		int[] rollDice = {0,0,0, 0,0,0, 0,0,0, 0}; // {X,X,X, GF,YF,RF, GB,YB,RB, Shots} rollDice output  
 		
 		int tempBrains	  = 0; 
@@ -49,26 +49,26 @@ class Assignment2
 		{
 			//1st menu line drawing
 			System.out.println("\u250C\u2500\u2500 Menu \u2500\u2500\u2500"
-			+ "\u2500\u2500\u2500\u2500\u2510"
+			+ "\u2500\u2500\u2500\u2500\u2500\u2500\u2510"
 
 			//1st table line
 			+ "  \u2500 Brain \u2500 Shots \u2500 Player \u2500");
 
 			//2nd menu  line
-			System.out.println("\u2502 1 - Play      \u2502");
+			System.out.println("\u2502 1 - Pick & Roll \u2502");
 
 			//3rd menu line
-			System.out.println("\u2502 2 - Stop      \u2502"
+			System.out.println("\u2502 2 - Stop        \u2502"
 
 			//3rd table line
 			+ "      " + tempBrains  + "       " + tempShots + "     " + playerName[currentPlayer]);
 
 			//4th menu line
-			System.out.println("\u2502 3 - Exit Game \u2502");
+			System.out.println("\u2502 3 - Exit Game   \u2502");
 
 			//5th menu line
 			System.out.println("\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
-			+ "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518"
+			+ "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518"
 
 			//5th table line
 			+ "  \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
@@ -165,6 +165,7 @@ class Assignment2
 			}
 			
 			else 
+				clearScreen();
 				System.out.println("> Wrong menu option");
 		}
 		in.close();
@@ -220,7 +221,6 @@ class Assignment2
 		return playerDice;
 	}
 
-	
 	public static int [] diceValue (int[] pickDice){
 		
 		Random r = new Random();
@@ -337,5 +337,4 @@ while (PickYellow !=0) {
 	private static void clearScreen() throws IOException, InterruptedException {
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 	}
-	
 }
