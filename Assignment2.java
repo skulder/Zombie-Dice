@@ -236,102 +236,84 @@ class Assignment2
 		int greenBrains = 0;
 		int yellowBrains = 0;
 		int redBrains = 0;
-		
-		int a=PickGreen;     // copy the value of the  color of the dice on the table as i would need it to pass it my array outvaluue
-		int b=PickYellow;
-		int c=PickRed;
-		
-		PickGreen=PickGreen+ftgreen;
-		PickYellow=PickYellow+ftyellow;
-		PickRed=PickRed+ftred;
 	
-	int Gunshot=0;
+		int Gunshot=0;
 
-	// Integer represent the side of the dice. It s needed to do a random number 1 to 6 when the dice roll.
-	int GreenSide=0;
-	int RedSide=0;
-	int YellowSide=0;
+		// Integer represent the side of the dice. It s needed to do a random number 1 to 6 when the dice roll.
+		int GreenSide=0;
+		int RedSide=0;
+		int YellowSide=0;
 
-while (PickGreen !=0) {
+		while (PickGreen !=0) {
 	
-		// The integer green side correspond on which side the green dice face off
-		GreenSide= r.nextInt(6)+1;
+			// The integer green side correspond on which side the green dice face off
+			GreenSide= r.nextInt(6) + 1;
 		
-		// The Green Dice have 1 GunShot 3 Brains 2 FootPrint value 1 for gunshot			
-	if (GreenSide==1){
-			Gunshot++;
-		}
-		// value 2,3,4 for brains
-	else if (GreenSide>1 && GreenSide<5){
-			greenBrains++;
-		}
+			// The Green Dice have 1 GunShot 3 Brains 2 FootPrint value 1 for gunshot			
+			if (GreenSide==1) {
+				Gunshot++;
+			}
+			// value 2,3,4 for brains
+			else if (GreenSide>1 && GreenSide<5){
+				greenBrains++;
+			}
 		
-	else{
-			ftgreen++;
+			else{
+				ftgreen++;
+			}
+				PickGreen--;
 		}
-		PickGreen--;
-	}
 	
-while (PickRed !=0) {
-					// The integer Red side correspond on which side the red dice face off
-		RedSide= r.nextInt(6)+1;
-					// The Red Dice have 1 Brain 3 Gunshot 2 FootPrint
-		// value 1 for brain			
-	if (RedSide==1){
-			redBrains++;
-		}
-		// value 2,3,4 for Gunshot
-	else if (RedSide>1 && RedSide<5){
-			Gunshot++;
-		}
+		while (PickRed !=0) {
+			// The integer Red side correspond on which side the red dice face off
+			RedSide= r.nextInt(6) + 1;
+			// The Red Dice have 1 Brain 3 Gunshot 2 FootPrint
+			// value 1 for brain			
+			if (RedSide==1) {
+				redBrains++;
+			}
+			// value 2,3,4 for Gunshot
+				else if (RedSide > 1 && RedSide < 5) {
+					Gunshot++;
+				}
 		
-	else{
-			ftred++;
+				else {
+					ftred++;
+				}
+			PickRed--;
 		}
-		
-		PickRed--;
-	}
 	
-while (PickYellow !=0) {
-		// The integer Yellow side correspond on which side the yellow dice face off
-		YellowSide= r.nextInt(6)+1;
-		
-					// The Yellow Dice have 2 GunShot 2 Brains 2 FootPrint value 1,2 for gunshot			
-	if (YellowSide>0 && YellowSide<3){
-			Gunshot++;
+		while (PickYellow !=0) {
+			// The integer Yellow side correspond on which side the yellow dice face off
+			YellowSide = r.nextInt(6) + 1;
+			// The Yellow Dice have 2 GunShot 2 Brains 2 FootPrint value 1,2 for gunshot			
+			if (YellowSide > 0 && YellowSide < 3) {
+				Gunshot++;
+			}
+			// value 3,4 for brains
+			else if (YellowSide > 2 && YellowSide < 5) {
+				yellowBrains++;
+			}
+			else{
+				ftyellow++;
+			}
+			PickYellow--;
 		}
-		// value 3,4 for brains
-	else if (YellowSide>2 && YellowSide<5){
-			yellowBrains++;
-		}
-		
-	else{
-			ftyellow++;
-		}
-		PickYellow--;
-
-	}
-	
 		
 	// create an array outvalue that will return the color of the dice G, Y, R,on which color of the footprint
 	// and the value of the diced that just role ( eg if it s brains or gunshot)	
 		
-		int[] outvalue= new int[10];
+		int[] outvalue = new int[10];
 		
-		outvalue[0] = a; // Green dice
-		outvalue[1]= b; // yellow dice
-		outvalue[2]= c; //red dice
-		outvalue[3] =ftgreen;  // green foot
+		outvalue[3] = ftgreen;  // green foot
 		outvalue[4] = ftyellow; // yellow foot
 		outvalue[5] = ftred; // red foot
 		outvalue[6] = greenBrains; 
 		outvalue[7] = yellowBrains;
 		outvalue[8] = redBrains;
-		outvalue[9]= Gunshot;
+		outvalue[9] = Gunshot;
 		
-
-	
-	return (outvalue);
+	return(outvalue);
 }
 	//Clears screen. Invokes windows command line with "cls" parameter
 	private static void clearScreen() throws IOException, InterruptedException {
