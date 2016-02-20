@@ -1,4 +1,4 @@
-/* Zombie Dice Game v0.14 (2016.02.20)
+/* Zombie Dice Game v0.15 (2016.02.20)
  * 
  * Creation of RED DRAGON team
  * https://github.com/skulder/Zombie-Dice
@@ -149,7 +149,7 @@ class Assignment2
 				if (playerScore[currentPlayer] >= 13) // winner?
 				{
 					clearScreen();
-					System.out.println("> Congratulations player " + currentPlayer + " won with " + playerScore[currentPlayer] + " brains");
+					System.out.println("> Congratulations player " + playerName[currentPlayer] + " won with " + playerScore[currentPlayer] + " brains");
 					System.exit(1);
 				}	
 	
