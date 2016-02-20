@@ -1,4 +1,4 @@
-// Zombie Dice Game v0.12 (2016.02.20)
+// Zombie Dice Game v0.13 (2016.02.20)
 /* Creation of RED DRAGON team
  * 
  * https://github.com/skulder/Zombie-Dice
@@ -165,8 +165,10 @@ class Assignment2
 			}
 			
 			else 
+			{
 				clearScreen();
 				System.out.println("> Wrong menu option");
+			}
 		}
 		in.close();
 	}
