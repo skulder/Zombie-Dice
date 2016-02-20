@@ -1,4 +1,4 @@
-// Zombie Dice Game v0.08 (2016.02.19)
+// Zombie Dice Game v0.09 (2016.02.19)
 /* Creation of RED DRAGON team
  * 
  * https://github.com/skulder/Zombie-Dice
@@ -15,73 +15,117 @@ import java.util.*;
 import java.io.IOException;
 class Assignment2
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws IOException, InterruptedException
 	{
-		int[] dice = {0,0,0, 0,0,0, 0,0, 0,0,0, 0,0,0}; // {G,Y,R, GF,YF,RF, Brain,Shots, TG,TY,TR, GB,YB,RB}
+		int[] dice	   = {0,0,0, 0,0,0, 0,0, 0,0,0, 0,0,0}; // {G,Y,R, GF,YF,RF, Brain,Shots, TG,TY,TR, GB,YB,RB}
 		int[] rollDice = {0,0,0, 0,0,0, 0,0,0, 0}; // {X,X,X, GF,YF,RF, GB,YB,RB, Shots} rollDice output  
 		
-		int tempBrains = 0; int tempShots = 0;
-		
+		int tempBrains	  = 0; 
+		int tempShots	  = 0;
+		int tempFeet	  = 0;
 		int currentPlayer = 0;
-		int playerCount	= 0;
-		int userAction = 0;
+		int playerCount	  = 0;
+		int userAction	  = 0;
 		
-		System.out.println("game starting");
-		System.out.print("many players: ");
+		clearScreen();
+						
+		System.out.println("> Welcome to Zombie Dice Game!");
+		System.out.print("> Enter number of players: ");
+		
 		Scanner in = new Scanner(System.in);
 		playerCount = in.nextInt();
+		
 		int[] playerScore = new int[playerCount];
+		
+		clearScreen();
+		System.out.println("> Total players " + playerCount);
 		
 		while (userAction != 3)
 		{
 			// menu drawing goes here
-			System.out.println("\ncurrent player " + currentPlayer);
-			System.out.println("1.Play  2.Stop  3.Exit");
-			System.out.print("Selection: ");
+			//1st menu line drawing
+			System.out.println("\u250C\u2500\u2500 Menu \u2500\u2500\u2500"
+			+ "\u2500\u2500\u2500\u2500\u2510"
+
+			//1st table line
+			+ "  \u2500 Brain \u2500 Shots \u2500 Player \u2500");
+
+			//2nd menu  line
+			System.out.println("\u2502 1 - Play      \u2502");
+
+			//2nd table line
+			//+ "  \u2502           \u2502");
+
+			//3rd menu line
+			System.out.println("\u2502 2 - Stop      \u2502"
+
+			//3rd table line
+			+ "      " + tempBrains  + "       " + tempShots + "       " + currentPlayer);
+
+			//4th menu line
+			System.out.println("\u2502 3 - Exit Game \u2502");
+
+			//4th table line
+			//+ "  \u2502           \u2502");
+
+			//5th menu line
+			System.out.println("\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+			+ "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518"
+
+			//5th table line
+			+ "  \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+			+ "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+			+ "\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500");
+			
+			for (int i = 0; i < playerCount; i++)
+			{
+				System.out.println("Player " + i + " has " + playerScore[i] + " brains");
+			}
+			
+			System.out.print("> Selection: ");
 			userAction = in.nextInt();
 			
 			// menu options
 			if (userAction == 1) // play
 			{
+				clearScreen();
 				pickDice(dice);	// picks dice colors. depending many foot it gets from Dicevalue method 
 				
 				dice[8] = dice[8] + dice[0]; // adds to total dice player have on table. Needed for calculating pick ranges in pickDice
 				dice[9] = dice[9] + dice[1];
 				dice[10] = dice[10] + dice[2];
 						
-				System.out.println("\npickDice output: " + dice[0] + " " + dice[1] + " " + dice[2] + "  " 
+				/*System.out.println("\npickDice output: " + dice[0] + " " + dice[1] + " " + dice[2] + "  " 
 														 + dice[3] + " " + dice[4] + " " + dice[5] + "  "
 														 + dice[6] + " " + dice[7] + "  " 
 														 + dice[8] + " " + dice[9] + " " + dice[10] + "  "
-														 + dice[11] + " " + dice[12] + " " + dice[13]);
+														 + dice[11] + " " + dice[12] + " " + dice[13]);*/
 				
 				rollDice = diceValue(dice); // Rolls dice. returns foot values needed for pickDice. Brain colors for refils and score. Shotguns. 
 				
 				tempBrains = tempBrains + rollDice[6] + rollDice[7] + rollDice[8]; // counting temporary brains before user pressed "stop"
 				tempShots = tempShots + rollDice[9]; // counting temporary shots
+				tempFeet = rollDice[3] + rollDice[4] + rollDice[5];
 				
 				dice[11] = dice[11] + rollDice[6]; // keeping track of brain color in case we run out of dices in bucked
 				dice[12] = dice[12] + rollDice[7]; // these brain will go back in to the bucked
 				dice[13] = dice[13] + rollDice[8];
 				
-				dice[3] = rollDice[3]; // only foots values need change in "dice" array for input to pickDice
+				dice[3] = rollDice[3]; // only feet values need change in "dice" array for input to pickDice
 				dice[4] = rollDice[4]; // so it copies from Dicevalue method output 
 				dice[5] = rollDice[5]; // to the input dice array for pickDice method
 				
-				System.out.println("Dicevalue output: " + rollDice[0] + " " + rollDice[1] + " " + rollDice[2] + "  " 
+				/*System.out.println("diceValue output: " + rollDice[0] + " " + rollDice[1] + " " + rollDice[2] + "  " 
 														+ rollDice[3] + " " + rollDice[4] + " " + rollDice[5] + "  " 
-														+ rollDice[6] + " " + rollDice[7] + " " + rollDice[8] + "  " + rollDice[9]);
+														+ rollDice[6] + " " + rollDice[7] + " " + rollDice[8] + "  " + rollDice[9]);*/
 				
-				
-				
-				System.out.println("temporary stats   | player " + currentPlayer + " | Brain " + tempBrains + " | Shotguns " + tempShots + " |");
-				
+				System.out.println("> You rolled " + (rollDice[6] + rollDice[7] + rollDice[8]) + " brain, " + rollDice[9] + " Shotguns, " + (rollDice[3] + rollDice[4] + rollDice[5]) + " feet");
 				if (tempShots >= 3) // Shotgun count check
 				{
-					System.out.println("You got 3 shots. Temp score lost. Switching player...");
-					System.out.println("permanent stats   | player " + currentPlayer + " | Brain " + playerScore[currentPlayer] + " |");
+					clearScreen();
+					System.out.println("> You got 3 shotguns! Returning dice and switching player.");
 					dice[8] = 0; dice[9] = 0; dice[10] = 0; // resets dices on table 
-					dice[11] = 0; dice[12] = 0; dice[13] = 0; // resets brain colors on table
+					dice[11] = 0; dice[12] = 0; dice[13] = 0; // resets brain colors on table 
 					tempBrains = 0; tempShots = 0;
 					
 					currentPlayer++;
@@ -94,17 +138,18 @@ class Assignment2
 			
 			else if (userAction == 2) // stop
 			{ 
-				System.out.println("adding score and switching player");
+				clearScreen();
+				System.out.println("> Adding score and switching player");
 				playerScore[currentPlayer] = playerScore[currentPlayer] + tempBrains;
 				dice[8] = 0; dice[9] = 0; dice[10] = 0; // resets player dices on table 
 				
-				if (tempBrains >= 13) // Winner?
+				if (playerScore[currentPlayer] >= 13) // Winner?
 				{
-					System.out.println("Congratulations player " + currentPlayer + " Won with " + playerScore[currentPlayer] + " brains");
+					clearScreen();
+					System.out.println("> Congratulations player " + currentPlayer + " won with " + playerScore[currentPlayer] + " brains");
 					System.exit(1);
 				}	
-				
-				System.out.println("permanent stats   | player " + currentPlayer + " | Brain " + playerScore[currentPlayer] + " |");
+	
 				tempBrains = 0; tempShots = 0;
 				
 				currentPlayer++; // switching player
@@ -169,7 +214,7 @@ class Assignment2
 					System.out.println("Error in pickDice");
 		}
 		
-		playerDice[0] = playerDice[0] + playerDice[3]; // adding foots picked last time to output
+		playerDice[0] = playerDice[0] + playerDice[3]; // adding feets picked last time to output
 		playerDice[1] = playerDice[1] + playerDice[4];
 		playerDice[2] = playerDice[2] + playerDice[5];
 		
@@ -202,8 +247,6 @@ class Assignment2
 		PickRed=PickRed+ftred;
 	
 	int Gunshot=0;
-	int Brains=0;
-	
 
 	// Integer represent the side of the dice. It s needed to do a random number 1 to 6 when the dice roll.
 	int GreenSide=0;
@@ -221,7 +264,6 @@ while (PickGreen !=0) {
 		}
 		// value 2,3,4 for brains
 	else if (GreenSide>1 && GreenSide<5){
-			Brains++;
 			greenBrains++;
 		}
 		
@@ -237,7 +279,6 @@ while (PickRed !=0) {
 					// The Red Dice have 1 Brain 3 Gunshot 2 FootPrint
 		// value 1 for brain			
 	if (RedSide==1){
-			Brains++;
 			redBrains++;
 		}
 		// value 2,3,4 for Gunshot
@@ -262,7 +303,6 @@ while (PickYellow !=0) {
 		}
 		// value 3,4 for brains
 	else if (YellowSide>2 && YellowSide<5){
-			Brains++;
 			yellowBrains++;
 		}
 		
@@ -294,5 +334,9 @@ while (PickYellow !=0) {
 	
 	return (outvalue);
 }
+	//Clears screen. Invokes windows command line with "cls" parameter
+	private static void clearScreen() throws IOException, InterruptedException {
+		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+	}
 	
 }
