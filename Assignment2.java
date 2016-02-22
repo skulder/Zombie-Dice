@@ -26,6 +26,9 @@ class Assignment2
 		int currentPlayer = 0;
 		int playerCount	  = 0;
 		int userAction	  = 0;
+		int x=0; // the value of x will only change once a player reach 13 brains, it will take the value of the location in the
+		// array  of the winner
+		int y=0; // The integer Y will ensure the winning mesage display only once.
 		
 		clearScreen();
 		System.out.println("> Welcome to Zombie Dice Game!");
@@ -134,7 +137,13 @@ class Assignment2
 					if (currentPlayer == playerCount)
 					{
 						currentPlayer = 0;
-					}	
+					}
+					if (x!=0 ){
+						if (x==playerCount){
+							System.exit(1);
+						}
+						x++;
+					}
 				}	
 			} 
 			
@@ -146,18 +155,31 @@ class Assignment2
 				dice[8] = 0; dice[9] = 0; dice[10] = 0; // resets dice count on table 
 				tempBrains = 0; tempShots = 0;
 				
-				if (playerScore[currentPlayer] >= 13) // winner?
+				if (playerScore[currentPlayer] >= 4) // winner?
 				{
-					clearScreen();
+					if (y==0){
 					System.out.println("> Congratulations player " + playerName[currentPlayer] + " won with " + playerScore[currentPlayer] + " brains");
-					System.exit(1);
+					x=currentPlayer+1;
+					System.out.println("the value of x is"+x);
+					System.out.println("the value of playerCount is"+playerCount);
+					
+					y++;
+					}
+					
+					
 				}	
 	
 				currentPlayer++; // switching player
 				if (currentPlayer == playerCount)
 				{
 					currentPlayer = 0;
-				}	
+				}
+				if (x!=0 ){
+						if (x==playerCount){
+							System.exit(1);
+						}
+						x++;
+					}
 			} 
 			
 			else if (userAction == 3) // exit
