@@ -1,4 +1,4 @@
-/* Zombie Dice Game v0.15 (2016.02.20)
+/* Zombie Dice Game v0.16 (2016.02.23)
  * 
  * Creation of RED DRAGON team
  * https://github.com/skulder/Zombie-Dice
@@ -28,8 +28,12 @@ class Assignment2
 		int userAction	  = 0;
 		
 		clearScreen();
-		System.out.println("> Welcome to Zombie Dice Game!");
-		System.out.print("> Enter number of players: ");
+		System.out.println(" ____          _    _       ___  _");
+		System.out.println("|_  /___ _ __ | |__(_)___  |   \\(_)__ ___");
+		System.out.println(" / // _ \\ '  \\| '_ \\ / -_) | |) | / _/ -_)");
+		System.out.println("/___\\___/_|_|_|_.__/_\\___| |___/|_\\__\\___|");
+		System.out.println("\n> Welcome to Zombie Dice Game!");
+		System.out.print("> Enter number of players: ");	
 		
 		Scanner in = new Scanner(System.in);
 		playerCount = in.nextInt();
@@ -149,7 +153,7 @@ class Assignment2
 				if (playerScore[currentPlayer] >= 13) // winner?
 				{
 					clearScreen();
-					System.out.println("> Congratulations player " + playerName[currentPlayer] + " won with " + playerScore[currentPlayer] + " brains");
+					System.out.println("> Congratulations! Player " + playerName[currentPlayer] + " won with " + playerScore[currentPlayer] + " brains");
 					System.exit(1);
 				}	
 	
@@ -218,7 +222,7 @@ class Assignment2
 					System.out.println("Error in pickDice");
 		}
 		
-		playerDice[0] = playerDice[0] + playerDice[3]; // adding feets picked last time to output
+		playerDice[0] = playerDice[0] + playerDice[3]; // adding feet picked last time to output for re-rolling
 		playerDice[1] = playerDice[1] + playerDice[4];
 		playerDice[2] = playerDice[2] + playerDice[5];
 		
@@ -229,12 +233,12 @@ class Assignment2
 		
 		Random r = new Random();
 			
-		int pickGreen	 = pickDice[0];  //convert  the input array pickDice as Integers;
+		int pickGreen	 = pickDice[0];  // renaming for better understanding
 		int pickYellow	 = pickDice[1];  // The int pickGreen Pick... will allow me to know which dice to roll
 		int pickRed		 = pickDice[2];
 		
 		int ftgreen 	 = 0; 
-		int ftyellow 	 = 0;		// as it a new roll reset the value of the location of the footprint;
+		int ftyellow 	 = 0;	// as it a new roll reset the value of the location of the footprint;
 		int ftred 		 = 0;
 		
 		int greenBrains  = 0;
